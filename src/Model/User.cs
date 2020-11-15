@@ -7,10 +7,23 @@ namespace IMPA
     {
         public Guid Id { get; init; }
         public string Username { get; init; }
-        public string Name { get; set; }
+        public string FullName { get; set; }
         public string Description { get; set; }
         public List<Interest> Interests { get; init; }
         public List<LocationRecord> LocationRecords { get; init; }
+        public Habits Habits { get; init; }
         public DateTime CreationTime { get; init; }
+
+        public User(string username)
+        {
+            Id = Guid.NewGuid();
+            Username = username;
+            FullName = String.Empty;
+            Description = String.Empty;
+            Interests = new();
+            LocationRecords = new();
+            Habits = new();
+            CreationTime = DateTime.UtcNow;
+        }
     }
 }
