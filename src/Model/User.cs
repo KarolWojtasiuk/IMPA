@@ -9,6 +9,8 @@ namespace IMPA
         public string Username { get; init; }
         public string Name { get; set; }
         public string Description { get; set; }
+        public List<Interest> Interests { get; init; }
         public List<LocationRecord> LocationRecords { get; init; }
+        public DateTime CreationTime { get; init; }
     }
 }
