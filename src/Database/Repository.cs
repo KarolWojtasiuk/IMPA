@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Collections.Generic;
 
@@ -6,8 +7,8 @@ namespace IMPA
 {
     public abstract class Repository<T> : IRepository<T> where T : IIdentifiable
     {
-        private readonly IDatabaseContext _dbContext;
-        private readonly string _collectionName;
+        protected readonly IDatabaseContext _dbContext;
+        protected readonly string _collectionName;
 
         public Repository(IDatabaseContext dbContext, string collectionName)
         {
@@ -20,14 +21,26 @@ namespace IMPA
             _dbContext.Insert(item, _collectionName);
         }
 
-        public void Update(T item)
+        public void Replace(T item)
         {
-            _dbContext.Update(item, _collectionName);
+            _dbContext.Replace(item, _collectionName);
         }
 
         public void Delete(Guid id)
         {
             _dbContext.Delete<T>(id, _collectionName);
+        }
+
+        public T Get(Guid id)
+        {
+            var item = _dbContext.Find<T>(i => i.Id == id, _collectionName).FirstOrDefault();
+
+            if (item is null)
+            {
+                throw new ItemDoesNotExistException(id, typeof(T));
+            }
+
+            return item;
         }
 
         public IEnumerable<T> Find(Expression<Func<T, bool>> expression)
