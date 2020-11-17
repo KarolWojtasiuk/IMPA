@@ -2,11 +2,14 @@ namespace IMPA
 {
     public class DatabaseController
     {
-        private readonly IDatabaseContext _databaseContext;
+        public UsersRepository Users { get; init; }
 
-        public DatabaseController(IDatabaseContext databaseContext)
+        private readonly IDatabaseContext _dbContext;
+
+        public DatabaseController(IDatabaseContext dbContext)
         {
-            _databaseContext = databaseContext;
+            _dbContext = dbContext;
+            Users = new(_dbContext);
         }
     }
 }
