@@ -10,6 +10,7 @@ namespace IMPA
         public string FullName { get; set; }
         public string Description { get; set; }
         public PersonalityType PersonalityType { get; set; }
+        public uint VisibilityDistance { get; init; }
         public List<Interest> Interests { get; init; }
         public List<LocationRecord> LocationRecords { get; init; }
         public Habits Habits { get; init; }
@@ -22,6 +23,7 @@ namespace IMPA
             FullName = String.Empty;
             Description = String.Empty;
             PersonalityType = PersonalityType.Unkown;
+            VisibilityDistance = 50;
             Interests = new();
             LocationRecords = new();
             Habits = new();
