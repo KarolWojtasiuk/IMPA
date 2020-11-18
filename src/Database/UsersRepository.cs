@@ -1,5 +1,5 @@
 using System;
-using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace IMPA
 {
@@ -22,7 +22,7 @@ namespace IMPA
             _dbContext.Update<User>(id, "PersonalityType", personalityType, _collectionName);
         }
 
-        public void ChangeInterests(Guid id, List<Interest> interests)
+        public void ChangeInterests(Guid id, ReadOnlyCollection<Interest> interests)
         {
             _dbContext.Update<User>(id, "Interests", interests, _collectionName);
         }
@@ -30,7 +30,7 @@ namespace IMPA
         public void AddInterest(Guid id, Interest interest)
         {
             var user = Get(id);
-            user.Interests.Add(interest);
+            user._interests.Add(interest);
 
             _dbContext.Update<User>(id, "Interests", user.Interests, _collectionName);
         }
@@ -38,12 +38,12 @@ namespace IMPA
         public void RemoveInterest(Guid id, Interest interest)
         {
             var user = Get(id);
-            user.Interests.Remove(interest);
+            user._interests.Remove(interest);
 
             _dbContext.Update<User>(id, "Interests", user.Interests, _collectionName);
         }
 
-        public void ChangeLocationRecord(Guid id, List<LocationRecord> locationRecords)
+        public void ChangeLocationRecord(Guid id, ReadOnlyCollection<LocationRecord> locationRecords)
         {
             _dbContext.Update<User>(id, "LocationRecords", locationRecords, _collectionName);
         }
@@ -51,7 +51,7 @@ namespace IMPA
         public void AddLocationRecord(Guid id, LocationRecord record)
         {
             var user = Get(id);
-            user.LocationRecords.Add(record);
+            user._locationRecords.Add(record);
 
             _dbContext.Update<User>(id, "LocationRecords", user.LocationRecords, _collectionName);
         }
@@ -59,7 +59,7 @@ namespace IMPA
         public void RemoveLocationRecord(Guid id, LocationRecord record)
         {
             var user = Get(id);
-            user.LocationRecords.Remove(record);
+            user._locationRecords.Remove(record);
 
             _dbContext.Update<User>(id, "LocationRecords", user.LocationRecords, _collectionName);
         }
