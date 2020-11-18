@@ -5,16 +5,16 @@ using System.Collections.ObjectModel;
 
 namespace IMPA
 {
-    public class User : IIdentifiable
+    public class User : IIdentifiable, IEquatable<User>
     {
-        internal List<Interest> _interests = new List<Interest>();
-        internal List<LocationRecord> _locationRecords = new List<LocationRecord>();
+        internal List<Interest> _interests = new();
+        internal List<LocationRecord> _locationRecords = new();
 
         public Guid Id { get; init; }
         public string Username { get; init; }
-        public string FullName { get; set; }
-        public string Description { get; set; }
-        public PersonalityType PersonalityType { get; set; }
+        public string FullName { get; init; }
+        public string Description { get; init; }
+        public PersonalityType PersonalityType { get; init; }
         public uint VisibilityDistance { get; init; }
         public ReadOnlyCollection<Interest> Interests
         {
@@ -27,7 +27,7 @@ namespace IMPA
             init => _locationRecords = value.ToList();
         }
         public Habits Habits { get; init; }
-        public DateTime CreationTime { get; init; }
+        public DateTime CreationDate { get; init; }
 
         public User(string username)
         {
@@ -40,7 +40,20 @@ namespace IMPA
             Interests = new(new List<Interest>());
             LocationRecords = new(new List<LocationRecord>());
             Habits = new();
-            CreationTime = DateTime.UtcNow;
+            CreationDate = DateTime.UtcNow;
         }
+
+        public bool Equals(User? other)
+        {
+            if (other is null)
+            {
+                return false;
+            }
+
+            return Id == other.Id;
+        }
+
+        public override bool Equals(object? obj) => Equals(obj as User);
+        public override int GetHashCode() => Id.GetHashCode();
     }
 }
