@@ -5,7 +5,7 @@ using System.Collections.ObjectModel;
 
 namespace IMPA
 {
-    public class User : IIdentifiable, IEquatable<User>
+    public record User : IIdentifiable, IEquatable<User>
     {
         internal List<Interest> _interests = new();
         internal List<LocationRecord> _locationRecords = new();
@@ -43,7 +43,7 @@ namespace IMPA
             CreationDate = DateTime.UtcNow;
         }
 
-        public bool Equals(User? other)
+        public virtual bool Equals(User? other)
         {
             if (other is null)
             {
@@ -53,7 +53,6 @@ namespace IMPA
             return Id == other.Id;
         }
 
-        public override bool Equals(object? obj) => Equals(obj as User);
         public override int GetHashCode() => Id.GetHashCode();
     }
 }

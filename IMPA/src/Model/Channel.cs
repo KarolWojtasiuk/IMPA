@@ -5,7 +5,7 @@ using System.Collections.ObjectModel;
 
 namespace IMPA
 {
-    public class Channel : IIdentifiable, IEquatable<Channel>
+    public record Channel : IIdentifiable, IEquatable<Channel>
     {
         internal List<Message> _messages = new();
 
@@ -26,7 +26,7 @@ namespace IMPA
             CreationDate = DateTime.UtcNow;
         }
 
-        public bool Equals(Channel? other)
+        public virtual bool Equals(Channel? other)
         {
             if (other is null)
             {
@@ -36,8 +36,6 @@ namespace IMPA
             return Id == other.Id;
         }
 
-        public override bool Equals(object? obj) => Equals(obj as Channel);
         public override int GetHashCode() => Id.GetHashCode();
-
     }
 }
