@@ -18,7 +18,7 @@ namespace IMPA
 
         public virtual void ConfigureServices(IServiceCollection services)
         {
-            var dbContext = new MongoContext(Configuration.GetSection("Database").GetValue<string>("ConnectionString"), "IMPA");
+            var dbContext = ConfigurationController.GetDatabaseContext(Configuration);
             services.AddSingleton(new DatabaseController(dbContext));
         }
 
