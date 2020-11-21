@@ -17,6 +17,11 @@ namespace IMPA
             _dbContext.Update<User>(id, "Description", description, _collectionName);
         }
 
+        public void ChangePassword(Guid id, string password)
+        {
+            _dbContext.Update<User>(id, "Password", new Password(password), _collectionName);
+        }
+
         public void ChangePersonalityType(Guid id, PersonalityType personalityType)
         {
             _dbContext.Update<User>(id, "PersonalityType", personalityType, _collectionName);
