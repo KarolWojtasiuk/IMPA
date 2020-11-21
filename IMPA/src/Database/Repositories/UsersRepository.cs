@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Collections.ObjectModel;
 
 namespace IMPA
@@ -6,6 +7,22 @@ namespace IMPA
     public class UsersRepository : Repository<User>
     {
         public UsersRepository(IDatabaseContext dbContext) : base(dbContext, "Users") { }
+
+        public User Login(string username, string password)
+        {
+            var user = Find(u => u.Username == username).FirstOrDefault();
+            if (user is null)
+            {
+                throw new LoginFailedException("User with given username not found.");
+            }
+
+            if (!user._password.VerifyPassword(password))
+            {
+                throw new LoginFailedException(user.Id, "Incorrect password");
+            }
+
+            return user;
+        }
 
         public void ChangeFullName(Guid id, string fullName)
         {
