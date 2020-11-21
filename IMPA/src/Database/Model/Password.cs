@@ -4,7 +4,7 @@ using System.Security.Cryptography;
 
 namespace IMPA
 {
-    public struct Password
+    public class Password
     {
         public string PasswordHash;
         public string PasswordSalt;
