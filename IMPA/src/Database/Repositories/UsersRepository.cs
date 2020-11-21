@@ -8,17 +8,17 @@ namespace IMPA
     {
         public UsersRepository(IDatabaseContext dbContext) : base(dbContext, "Users") { }
 
-        public User Login(string username, string password)
+        public User? Login(string username, string password)
         {
             var user = Find(u => u.Username == username).FirstOrDefault();
             if (user is null)
             {
-                throw new LoginFailedException("User with given username not found.");
+                return default;
             }
 
             if (!user._password.VerifyPassword(password))
             {
-                throw new LoginFailedException(user.Id, "Incorrect password");
+                return default;
             }
 
             return user;

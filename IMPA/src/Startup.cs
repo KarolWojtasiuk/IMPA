@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
+using Microsoft.AspNetCore.Authentication;
 
 namespace IMPA
 {
@@ -20,6 +21,9 @@ namespace IMPA
         {
             var dbContext = ConfigurationController.GetDatabaseContext(Configuration);
             services.AddSingleton(new DatabaseController(dbContext));
+
+            services.AddControllers();
+            services.AddAuthentication("BasicAuthentication").AddScheme<AuthenticationSchemeOptions, BasicAuthenticationHandler>("BasicAuthentication", null);
         }
 
         public static void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -31,12 +35,12 @@ namespace IMPA
 
             app.UseRouting();
 
+            app.UseAuthentication();
+            app.UseAuthorization();
+
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapGet("/", async context =>
-                {
-                    await context.Response.WriteAsync("Hello World!");
-                });
+                endpoints.MapControllers();
             });
         }
     }
