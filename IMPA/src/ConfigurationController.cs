@@ -12,6 +12,12 @@ namespace IMPA
         public string DatabaseName { get; set; } = "IMPA";
     }
 
+    public class InformationOptions
+    {
+        public string Title { get; set; } = String.Empty;
+        public string Description { get; set; } = String.Empty;
+    }
+
     public static class ConfigurationController
     {
         private static Type GetDatabaseType(string databaseName)
@@ -43,5 +49,14 @@ namespace IMPA
 
             return context;
         }
+
+        public static InformationOptions GetInformation(IConfiguration configuration)
+        {
+            var options = new InformationOptions();
+            configuration.Bind("Information", options);
+
+            return options;
+        }
     }
+
 }
