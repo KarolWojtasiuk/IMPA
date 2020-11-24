@@ -37,6 +37,8 @@ namespace IMPA
         {
             Id = Guid.NewGuid();
             Username = username;
+            VerifyUsername();
+            VerifyPassword(password);
             FullName = String.Empty;
             Description = String.Empty;
             _password = new Password(password);
@@ -46,6 +48,22 @@ namespace IMPA
             LocationRecords = new(new List<LocationRecord>());
             Habits = new();
             CreationDate = DateTime.UtcNow;
+        }
+
+        private void VerifyUsername()
+        {
+            if (Username.Length < 5)
+            {
+                throw new ModelVerificationException(Id, typeof(User), "Username should contain at least 5 characters.");
+            }
+        }
+
+        private void VerifyPassword(string password)
+        {
+            if (password.Length < 5)
+            {
+                throw new ModelVerificationException(Id, typeof(User), "Password should contain at least 5 characters.");
+            }
         }
 
         public virtual bool Equals(User? other)
