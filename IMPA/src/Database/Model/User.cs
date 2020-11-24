@@ -3,7 +3,6 @@ using System.Linq;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using MongoDB.Bson.Serialization.Attributes;
-using System.Security.Cryptography;
 
 namespace IMPA
 {

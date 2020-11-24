@@ -1,6 +1,5 @@
 using System;
 using System.Reflection;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 

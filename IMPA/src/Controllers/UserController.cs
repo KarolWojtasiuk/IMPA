@@ -1,10 +1,6 @@
 using System;
-using System.Net;
-using System.Net.Http;
-using System.Reflection;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
 
 namespace IMPA
 {
