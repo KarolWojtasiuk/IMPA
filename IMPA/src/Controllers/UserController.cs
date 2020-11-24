@@ -25,18 +25,18 @@ namespace IMPA
         public IActionResult CreateUser(string username, string password)
         {
             try
-            {                
+            {
                 var user = new User(username, password);
                 _databaseController.Users.Insert(user);
             }
             catch (ModelVerificationException e)
             {
-                return BadRequest( new ErrorResult(e.GetType().Name, e.Message));
+                return BadRequest(new ErrorResult(e.GetType().Name, e.Message));
             }
             return Ok();
         }
     }
 
-    public record ErrorResult(string exceptionType, string exceptionMessage);
-    public record CreateResult(Guid id, DateTime creationDate);
+    public record ErrorResult(string ExceptionType, string ExceptionMessage);
+    public record CreateResult(Guid Id, DateTime CreationDate);
 }
