@@ -17,7 +17,8 @@ namespace IMPA
             _configuration = configuration;
         }
 
-        public InfoModel Get()
+        [HttpGet]
+        public InfoModel GetInfo()
         {
             var information = ConfigurationController.GetInformation(_configuration);
 
