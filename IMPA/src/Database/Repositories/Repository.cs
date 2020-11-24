@@ -16,7 +16,7 @@ namespace IMPA
             _collectionName = collectionName;
         }
 
-        public void Insert(T item)
+        public virtual void Insert(T item)
         {
             _dbContext.Insert(item, _collectionName);
         }

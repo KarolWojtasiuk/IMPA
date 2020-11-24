@@ -24,6 +24,16 @@ namespace IMPA
             return user;
         }
 
+        public override void Insert(User user)
+        {
+            if (_dbContext.Find<User>(u => u.Username.ToLower() == user.Username.ToLower(), _collectionName).Any())
+            {
+                throw new ModelVerificationException(user.Id, user.GetType(), "Username is taken.");
+            }
+
+            base.Insert(user);
+        }
+
         public void ChangeFullName(Guid id, string fullName)
         {
             _dbContext.Update<User>(id, "FullName", fullName, _collectionName);
