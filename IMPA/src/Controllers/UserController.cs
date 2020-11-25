@@ -24,12 +24,27 @@ namespace IMPA
             {
                 var user = new User(username, password);
                 _databaseController.Users.Insert(user);
+                return Ok(new CreateResult(user.Id, user.CreationDate));
             }
             catch (ModelVerificationException e)
             {
                 return BadRequest(new ErrorResult(e.GetType().Name, e.Message));
             }
-            return Ok();
+        }
+
+        [HttpGet]
+        [Route("{id}")]
+        [AllowAnonymous]
+        public IActionResult GetUser([FromRoute] Guid id)
+        {
+            try
+            {
+                return Ok(_databaseController.Users.Get(id));
+            }
+            catch (ModelVerificationException e)
+            {
+                return BadRequest(new ErrorResult(e.GetType().Name, e.Message));
+            }
         }
     }
 
