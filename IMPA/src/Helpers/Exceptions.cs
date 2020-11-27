@@ -11,4 +11,9 @@ namespace IMPA
     {
         public ModelVerificationException(Guid id, Type type, string message) : base($"{type.Name}({id}): {message}") { }
     }
+
+    public class InsufficientPermissionException : Exception
+    {
+        public InsufficientPermissionException(Guid id, string action) : base($"User({id}): You do not have sufficient permission to perform action `{action}`.") { }
+    }
 }

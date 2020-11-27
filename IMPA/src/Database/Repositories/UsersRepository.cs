@@ -85,7 +85,7 @@ namespace IMPA
             var user = Get(id);
             user._locationRecords.Add(record);
 
-            _dbContext.Update<User>(id, "LocationRecords", user.LocationRecords, _collectionName);
+            _dbContext.Update<User>(id, "LocationRecords", user._locationRecords, _collectionName);
         }
 
         public void RemoveLocationRecord(Guid id, LocationRecord record)
@@ -93,7 +93,7 @@ namespace IMPA
             var user = Get(id);
             user._locationRecords.Remove(record);
 
-            _dbContext.Update<User>(id, "LocationRecords", user.LocationRecords, _collectionName);
+            _dbContext.Update<User>(id, "LocationRecords", user._locationRecords, _collectionName);
         }
 
         public void ChangeHabits(Guid id, Habits habits)

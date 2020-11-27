@@ -9,6 +9,7 @@ namespace IMPA
     public record User : IIdentifiable, IEquatable<User>
     {
         internal List<Interest> _interests = new();
+        [BsonElement("LocationRecords")]
         internal List<LocationRecord> _locationRecords = new();
         [BsonElement("Password")]
         internal Password _password;
@@ -23,11 +24,6 @@ namespace IMPA
         {
             get => _interests.AsReadOnly();
             init => _interests = value.ToList();
-        }
-        public ReadOnlyCollection<LocationRecord> LocationRecords
-        {
-            get => _locationRecords.AsReadOnly();
-            init => _locationRecords = value.ToList();
         }
         public Habits Habits { get; init; }
         public DateTime CreationDate { get; init; }
@@ -44,7 +40,6 @@ namespace IMPA
             PersonalityType = PersonalityType.Unkown;
             VisibilityDistance = 50;
             Interests = new(new List<Interest>());
-            LocationRecords = new(new List<LocationRecord>());
             Habits = new();
             CreationDate = DateTime.UtcNow;
         }
