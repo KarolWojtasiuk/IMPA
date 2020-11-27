@@ -34,12 +34,32 @@ namespace IMPA
 
         [HttpGet]
         [Route("{id}")]
-        [AllowAnonymous]
         public IActionResult GetUser([FromRoute] Guid id)
         {
             try
             {
                 return Ok(_databaseController.Users.Get(id));
+            }
+            catch (ModelVerificationException e)
+            {
+                return BadRequest(new ErrorResult(e.GetType().Name, e.Message));
+            }
+        }
+
+        [HttpDelete]
+        [Route("{id}")]
+        public IActionResult DeleteUser([FromRoute] Guid id)
+        {
+            var currentUser = User.GetUser(_databaseController);
+            if (currentUser.Id != id)
+            {
+                throw new InsufficientPermissionException(currentUser.Id, $"DeleteUser({id})");
+            }
+
+            try
+            {
+                _databaseController.Users.Delete(currentUser.Id);
+                return Ok();
             }
             catch (ModelVerificationException e)
             {
