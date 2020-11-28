@@ -75,7 +75,7 @@ namespace IMPA
             _dbContext.Update<User>(id, "Interests", user.Interests, _collectionName);
         }
 
-        public void ChangeLocationRecord(Guid id, ReadOnlyCollection<LocationRecord> locationRecords)
+        public void ChangeLocationRecords(Guid id, ReadOnlyCollection<LocationRecord> locationRecords)
         {
             _dbContext.Update<User>(id, "LocationRecords", locationRecords, _collectionName);
         }
