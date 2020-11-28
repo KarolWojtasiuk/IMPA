@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Security.Claims;
 
 namespace IMPA
@@ -15,6 +17,15 @@ namespace IMPA
             }
 
             return databaseController.Users.Get(new Guid(claim.Value));
+        }
+
+        public static List<T> AddUnique<T>(this List<T> list, T item)
+        {
+            if (!list.Contains(item))
+            {
+                list.Add(item);
+            }
+            return list;
         }
     }
 }

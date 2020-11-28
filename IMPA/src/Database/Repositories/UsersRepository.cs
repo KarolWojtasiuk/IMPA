@@ -62,7 +62,7 @@ namespace IMPA
         public void AddInterest(Guid id, Interest interest)
         {
             var user = Get(id);
-            user._interests.Add(interest);
+            user._interests.AddUnique(interest);
 
             _dbContext.Update<User>(id, "Interests", user.Interests, _collectionName);
         }
@@ -83,7 +83,7 @@ namespace IMPA
         public void AddLocationRecord(Guid id, LocationRecord record)
         {
             var user = Get(id);
-            user._locationRecords.Add(record);
+            user._locationRecords.AddUnique(record);
 
             _dbContext.Update<User>(id, "LocationRecords", user._locationRecords, _collectionName);
         }
