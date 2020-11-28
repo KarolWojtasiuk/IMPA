@@ -143,7 +143,7 @@ namespace IMPA
 
             try
             {
-                _databaseController.Users.ChangeInterests(currentUser.Id, interests);
+                _databaseController.Users.ChangeInterests(currentUser.Id, interests.AsReadOnly());
                 return Ok();
             }
             catch (ModelVerificationException e)
