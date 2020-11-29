@@ -17,13 +17,11 @@ namespace IMPA
         }
 
         [HttpGet]
-        public InfoModel GetInfo()
+        public InfoResult GetInfo()
         {
             var information = ConfigurationController.GetInformation(_configuration);
 
-            return new InfoModel(information.Title, information.Description, Assembly.GetEntryAssembly()?.GetName().Version?.ToString() ?? String.Empty);
+            return new InfoResult(information.Title, information.Description, Assembly.GetEntryAssembly()?.GetName().Version?.ToString() ?? "Unkown");
         }
     }
-
-    public record InfoModel(string Title, string Description, string Version);
 }

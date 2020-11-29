@@ -27,7 +27,7 @@ namespace IMPA
                 _databaseController.Users.Insert(user);
                 return Ok(new CreateResult(user.Id, user.CreationDate));
             }
-            catch (ModelVerificationException e)
+            catch (IMPAException e)
             {
                 return BadRequest(new ErrorResult(e.GetType().Name, e.Message));
             }
@@ -41,7 +41,7 @@ namespace IMPA
             {
                 return Ok(_databaseController.Users.Get(id));
             }
-            catch (ModelVerificationException e)
+            catch (IMPAException e)
             {
                 return BadRequest(new ErrorResult(e.GetType().Name, e.Message));
             }
@@ -62,7 +62,7 @@ namespace IMPA
                 _databaseController.Users.Delete(currentUser.Id);
                 return Ok();
             }
-            catch (ModelVerificationException e)
+            catch (IMPAException e)
             {
                 return BadRequest(new ErrorResult(e.GetType().Name, e.Message));
             }
@@ -83,7 +83,7 @@ namespace IMPA
                 _databaseController.Users.ChangeFullName(currentUser.Id, fullName);
                 return Ok();
             }
-            catch (ModelVerificationException e)
+            catch (IMPAException e)
             {
                 return BadRequest(new ErrorResult(e.GetType().Name, e.Message));
             }
@@ -104,7 +104,7 @@ namespace IMPA
                 _databaseController.Users.ChangeDescription(currentUser.Id, description);
                 return Ok();
             }
-            catch (ModelVerificationException e)
+            catch (IMPAException e)
             {
                 return BadRequest(new ErrorResult(e.GetType().Name, e.Message));
             }
@@ -125,7 +125,7 @@ namespace IMPA
                 _databaseController.Users.ChangePersonalityType(currentUser.Id, personalityType);
                 return Ok();
             }
-            catch (ModelVerificationException e)
+            catch (IMPAException e)
             {
                 return BadRequest(new ErrorResult(e.GetType().Name, e.Message));
             }
@@ -146,7 +146,7 @@ namespace IMPA
                 _databaseController.Users.ChangeInterests(currentUser.Id, interests.AsReadOnly());
                 return Ok();
             }
-            catch (ModelVerificationException e)
+            catch (IMPAException e)
             {
                 return BadRequest(new ErrorResult(e.GetType().Name, e.Message));
             }
@@ -167,7 +167,7 @@ namespace IMPA
                 _databaseController.Users.AddInterest(currentUser.Id, interest);
                 return Ok();
             }
-            catch (ModelVerificationException e)
+            catch (IMPAException e)
             {
                 return BadRequest(new ErrorResult(e.GetType().Name, e.Message));
             }
@@ -188,7 +188,7 @@ namespace IMPA
                 _databaseController.Users.RemoveInterest(currentUser.Id, interest);
                 return Ok();
             }
-            catch (ModelVerificationException e)
+            catch (IMPAException e)
             {
                 return BadRequest(new ErrorResult(e.GetType().Name, e.Message));
             }
@@ -209,7 +209,7 @@ namespace IMPA
                 _databaseController.Users.ChangeLocationRecords(currentUser.Id, locationRecords.AsReadOnly());
                 return Ok();
             }
-            catch (ModelVerificationException e)
+            catch (IMPAException e)
             {
                 return BadRequest(new ErrorResult(e.GetType().Name, e.Message));
             }
@@ -230,7 +230,7 @@ namespace IMPA
                 _databaseController.Users.AddLocationRecord(currentUser.Id, locationRecord);
                 return Ok();
             }
-            catch (ModelVerificationException e)
+            catch (IMPAException e)
             {
                 return BadRequest(new ErrorResult(e.GetType().Name, e.Message));
             }
@@ -251,7 +251,7 @@ namespace IMPA
                 _databaseController.Users.RemoveLocationRecord(currentUser.Id, locationRecord);
                 return Ok();
             }
-            catch (ModelVerificationException e)
+            catch (IMPAException e)
             {
                 return BadRequest(new ErrorResult(e.GetType().Name, e.Message));
             }
@@ -272,13 +272,10 @@ namespace IMPA
                 _databaseController.Users.ChangeHabits(currentUser.Id, habits);
                 return Ok();
             }
-            catch (ModelVerificationException e)
+            catch (IMPAException e)
             {
                 return BadRequest(new ErrorResult(e.GetType().Name, e.Message));
             }
         }
     }
-
-    public record ErrorResult(string ExceptionType, string ExceptionMessage);
-    public record CreateResult(Guid Id, DateTime CreationDate);
 }
