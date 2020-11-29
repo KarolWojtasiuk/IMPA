@@ -19,11 +19,11 @@ namespace IMPA
 
         [HttpPost]
         [AllowAnonymous]
-        public IActionResult CreateUser(string username, string password)
+        public IActionResult CreateUser([FromBody] UserModel userModel)
         {
             try
             {
-                var user = new User(username, password);
+                var user = new User(userModel.Username, userModel.Password);
                 _databaseController.Users.Insert(user);
                 return Ok(new CreateResult(user.Id, user.CreationDate));
             }
