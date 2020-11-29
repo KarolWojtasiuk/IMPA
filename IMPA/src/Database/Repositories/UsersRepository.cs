@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Collections.ObjectModel;
 
 namespace IMPA
@@ -6,6 +7,32 @@ namespace IMPA
     public class UsersRepository : Repository<User>
     {
         public UsersRepository(IDatabaseContext dbContext) : base(dbContext, "Users") { }
+
+        public User? Login(string username, string password)
+        {
+            var user = Find(u => u.Username == username).FirstOrDefault();
+            if (user is null)
+            {
+                return default;
+            }
+
+            if (!user._password.VerifyPassword(password))
+            {
+                return default;
+            }
+
+            return user;
+        }
+
+        public override void Insert(User user)
+        {
+            if (_dbContext.Find<User>(u => u.Username.ToLower() == user.Username.ToLower(), _collectionName).Any())
+            {
+                throw new ModelVerificationException(user.Id, user.GetType(), "Username is taken.");
+            }
+
+            base.Insert(user);
+        }
 
         public void ChangeFullName(Guid id, string fullName)
         {
@@ -15,6 +42,11 @@ namespace IMPA
         public void ChangeDescription(Guid id, string description)
         {
             _dbContext.Update<User>(id, "Description", description, _collectionName);
+        }
+
+        public void ChangePassword(Guid id, string password)
+        {
+            _dbContext.Update<User>(id, "Password", new Password(password), _collectionName);
         }
 
         public void ChangePersonalityType(Guid id, PersonalityType personalityType)
@@ -30,7 +62,7 @@ namespace IMPA
         public void AddInterest(Guid id, Interest interest)
         {
             var user = Get(id);
-            user._interests.Add(interest);
+            user._interests.AddUnique(interest);
 
             _dbContext.Update<User>(id, "Interests", user.Interests, _collectionName);
         }
@@ -43,7 +75,7 @@ namespace IMPA
             _dbContext.Update<User>(id, "Interests", user.Interests, _collectionName);
         }
 
-        public void ChangeLocationRecord(Guid id, ReadOnlyCollection<LocationRecord> locationRecords)
+        public void ChangeLocationRecords(Guid id, ReadOnlyCollection<LocationRecord> locationRecords)
         {
             _dbContext.Update<User>(id, "LocationRecords", locationRecords, _collectionName);
         }
@@ -51,9 +83,9 @@ namespace IMPA
         public void AddLocationRecord(Guid id, LocationRecord record)
         {
             var user = Get(id);
-            user._locationRecords.Add(record);
+            user._locationRecords.AddUnique(record);
 
-            _dbContext.Update<User>(id, "LocationRecords", user.LocationRecords, _collectionName);
+            _dbContext.Update<User>(id, "LocationRecords", user._locationRecords, _collectionName);
         }
 
         public void RemoveLocationRecord(Guid id, LocationRecord record)
@@ -61,7 +93,7 @@ namespace IMPA
             var user = Get(id);
             user._locationRecords.Remove(record);
 
-            _dbContext.Update<User>(id, "LocationRecords", user.LocationRecords, _collectionName);
+            _dbContext.Update<User>(id, "LocationRecords", user._locationRecords, _collectionName);
         }
 
         public void ChangeHabits(Guid id, Habits habits)
